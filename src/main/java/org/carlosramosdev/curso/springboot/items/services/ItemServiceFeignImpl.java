@@ -3,16 +3,21 @@ package org.carlosramosdev.curso.springboot.items.services;
 import org.carlosramosdev.curso.springboot.items.client.IProductFeignClient;
 import org.carlosramosdev.curso.springboot.items.models.Item;
 import org.carlosramosdev.curso.springboot.items.models.Product;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+@Service
 public class ItemServiceFeignImpl implements IItemService{
 
-    private IProductFeignClient client;
+    private final IProductFeignClient client;
+
+    public ItemServiceFeignImpl(IProductFeignClient client) {
+        this.client = client;
+    }
 
     @Override
     public List<Item> findAll() {
