@@ -21,7 +21,7 @@ public class ItemServiceFeignImpl implements IItemService{
 
     @Override
     public List<Item> findAll() {
-        return client.findAll().stream()
+        return client.list().stream()
                 .map(product -> new Item(product, new Random().nextInt(10 + 1)))
                 .collect(Collectors.toList());
     }
