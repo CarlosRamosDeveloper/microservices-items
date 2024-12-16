@@ -1,5 +1,6 @@
 package org.carlosramosdev.curso.springboot.items.services;
 
+import feign.FeignException;
 import org.carlosramosdev.curso.springboot.items.client.IProductFeignClient;
 import org.carlosramosdev.curso.springboot.items.models.Item;
 import org.carlosramosdev.curso.springboot.items.models.Product;
@@ -28,10 +29,11 @@ public class ItemServiceFeignImpl implements IItemService{
 
     @Override
     public Optional<Item> findById(Long id) {
-        Product product = client.findById(id);
-        if (product != null) {
+        try {
+            Product product = client.findById(id);
             return Optional.of(new Item(client.findById(id), new Random().nextInt(10 + 1)));
+        } catch (FeignException fe) {
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 }
