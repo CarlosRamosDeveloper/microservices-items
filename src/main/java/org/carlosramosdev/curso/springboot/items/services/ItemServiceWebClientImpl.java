@@ -5,6 +5,7 @@ import org.carlosramosdev.curso.springboot.items.models.Product;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.*;
 
@@ -31,10 +32,15 @@ public class ItemServiceWebClientImpl implements IItemService {
     public Optional<Item> findById(Long id) {
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
-        return Optional.ofNullable(client.build().get()
-                .uri(url+"/{id}", params).accept(MediaType.APPLICATION_JSON)
-                .retrieve().bodyToMono(Product.class)
-                .map(product -> new Item(product, new Random().nextInt(10 + 1)))
-                .block());
+        try {
+            return Optional.ofNullable(client.build().get()
+                    .uri(url+"/{id}", params).accept(MediaType.APPLICATION_JSON)
+                    .retrieve().bodyToMono(Product.class)
+                    .map(product -> new Item(product, new Random().nextInt(10 + 1)))
+                    .block());
+        } catch (WebClientResponseException e) {
+            return Optional.empty();
+        }
+
     }
 }
