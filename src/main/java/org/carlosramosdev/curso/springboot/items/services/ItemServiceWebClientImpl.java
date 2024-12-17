@@ -2,14 +2,12 @@ package org.carlosramosdev.curso.springboot.items.services;
 
 import org.carlosramosdev.curso.springboot.items.models.Item;
 import org.carlosramosdev.curso.springboot.items.models.Product;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.*;
 
-@Primary
 @Service
 public class ItemServiceWebClientImpl implements IItemService {
 
@@ -23,7 +21,7 @@ public class ItemServiceWebClientImpl implements IItemService {
     @Override
     public List<Item> findAll() {
         return this.client.build().get()
-                .uri("http://products").accept(MediaType.APPLICATION_JSON)
+                .uri(url).accept(MediaType.APPLICATION_JSON)
                 .retrieve().bodyToFlux(Product.class)
                 .map(product -> new Item(product, new Random().nextInt(10 + 1)))
                 .collectList().block();
@@ -34,7 +32,7 @@ public class ItemServiceWebClientImpl implements IItemService {
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         return Optional.ofNullable(client.build().get()
-                .uri("http://products/{id}", params).accept(MediaType.APPLICATION_JSON)
+                .uri(url+"/{id}", params).accept(MediaType.APPLICATION_JSON)
                 .retrieve().bodyToMono(Product.class)
                 .map(product -> new Item(product, new Random().nextInt(10 + 1)))
                 .block());
