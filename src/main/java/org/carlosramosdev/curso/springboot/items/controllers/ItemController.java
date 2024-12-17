@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +27,12 @@ public class ItemController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Item> findById(@PathVariable long id){
+    public ResponseEntity<?> findById(@PathVariable long id){
         Optional<Item> item = service.findById(id);
-        return item.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (item.isPresent()) {
+            return ResponseEntity.ok(item.get());
+        }
+        return ResponseEntity.status(404).body(Collections.singletonMap(
+                "message","No existe ningún producto asignado a este valor"));
     }
 }
