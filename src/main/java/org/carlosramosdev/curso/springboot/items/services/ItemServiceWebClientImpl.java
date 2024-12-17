@@ -13,7 +13,6 @@ import java.util.*;
 public class ItemServiceWebClientImpl implements IItemService {
 
     private final WebClient.Builder client;
-    private final String url = "http://products";
 
     public ItemServiceWebClientImpl(WebClient.Builder client) {
         this.client = client;
@@ -22,7 +21,7 @@ public class ItemServiceWebClientImpl implements IItemService {
     @Override
     public List<Item> findAll() {
         return this.client.build().get()
-                .uri(url).accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .retrieve().bodyToFlux(Product.class)
                 .map(product -> new Item(product, new Random().nextInt(10 + 1)))
                 .collectList().block();
@@ -34,7 +33,7 @@ public class ItemServiceWebClientImpl implements IItemService {
         params.put("id", id);
         try {
             return Optional.ofNullable(client.build().get()
-                    .uri(url+"/{id}", params).accept(MediaType.APPLICATION_JSON)
+                    .uri("/{id}", params).accept(MediaType.APPLICATION_JSON)
                     .retrieve().bodyToMono(Product.class)
                     .map(product -> new Item(product, new Random().nextInt(10 + 1)))
                     .block());
