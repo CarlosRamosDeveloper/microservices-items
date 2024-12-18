@@ -30,7 +30,7 @@ public class ItemServiceFeignImpl implements IItemService{
     @Override
     public Optional<Item> findById(Long id) {
         try {
-            Product product = client.findById(id);
+            client.findById(id);
             return Optional.of(new Item(client.findById(id), new Random().nextInt(10 + 1)));
         } catch (FeignException fe) {
             return Optional.empty();
