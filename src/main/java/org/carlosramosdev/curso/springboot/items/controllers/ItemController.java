@@ -56,7 +56,7 @@ public class ItemController {
         return service.update(product, id);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {
         service.deleteById(id);
