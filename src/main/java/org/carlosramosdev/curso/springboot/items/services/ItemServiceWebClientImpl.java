@@ -42,4 +42,19 @@ public class ItemServiceWebClientImpl implements IItemService {
         }
 
     }
+
+    @Override
+    public Product save(Product product) {
+        return null;
+    }
+
+    @Override
+    public Product update(Product product, Long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
 }

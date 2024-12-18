@@ -36,4 +36,19 @@ public class ItemServiceFeignImpl implements IItemService{
             return Optional.empty();
         }
     }
+
+    @Override
+    public Product save(Product product) {
+        return null;
+    }
+
+    @Override
+    public Product update(Product product, Long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
 }
