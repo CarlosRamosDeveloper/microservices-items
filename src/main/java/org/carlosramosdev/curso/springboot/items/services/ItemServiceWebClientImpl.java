@@ -1,6 +1,4 @@
 package org.carlosramosdev.curso.springboot.items.services;
-
-import jdk.jfr.ContentType;
 import org.carlosramosdev.curso.springboot.items.models.Item;
 import org.carlosramosdev.curso.springboot.items.models.Product;
 import org.springframework.http.MediaType;
