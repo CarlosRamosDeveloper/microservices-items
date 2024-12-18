@@ -1,5 +1,6 @@
 package org.carlosramosdev.curso.springboot.items.services;
 
+import jdk.jfr.ContentType;
 import org.carlosramosdev.curso.springboot.items.models.Item;
 import org.carlosramosdev.curso.springboot.items.models.Product;
 import org.springframework.http.MediaType;
@@ -45,16 +46,32 @@ public class ItemServiceWebClientImpl implements IItemService {
 
     @Override
     public Product save(Product product) {
-        return null;
+        return client.build().post().contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(product).retrieve().bodyToMono(Product.class).block();
     }
 
     @Override
     public Product update(Product product, Long id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        client.build().put()
+                .uri("/{id}", params)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(product)
+                .retrieve().bodyToMono(Product.class).block();
+
+
         return null;
     }
 
     @Override
     public void deleteById(Long id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
 
+        client.build()
+                .delete().uri("/{id}", params)
+                .retrieve().bodyToMono(Void.class).block();
     }
 }
