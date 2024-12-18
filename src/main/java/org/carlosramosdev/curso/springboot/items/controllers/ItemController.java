@@ -17,7 +17,7 @@ public class ItemController {
 
     private final IItemService service;
 
-    public ItemController(@Qualifier("itemServiceWebClientImpl") IItemService service) {
+    public ItemController(@Qualifier("itemServiceFeignImpl") IItemService service) {
         this.service = service;
     }
 
