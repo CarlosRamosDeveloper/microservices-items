@@ -4,10 +4,7 @@ import org.carlosramosdev.curso.springboot.items.models.Item;
 import org.carlosramosdev.curso.springboot.items.services.IItemService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,8 +21,9 @@ public class ItemController {
 
     @GetMapping()
     public List<Item> list(@RequestParam(name="name", required=false) String name,
-                           @RequestParam(name="token-request", required = false) String tokenRequest) {
+                           @RequestHeader(name="token-request", required = false) String tokenRequest) {
         if (name != null){
+
             System.out.println(name);
         }
         if (tokenRequest != null) {
